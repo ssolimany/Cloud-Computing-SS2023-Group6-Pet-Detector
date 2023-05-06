@@ -1,0 +1,12 @@
+# Python virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# DS_Store files contain folder-related metadata and are automatically created when you use Finder to look into a folder
+# If you don’t configure Git to ignore them, .DS_Store files will show up in your commits.
+.DS_Store
