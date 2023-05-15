@@ -33,11 +33,10 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def get_latest_detections():
     """
-    This Endpoint retrieves the 9 latest detection objects together with their confidences and detections metadata from MinIO,
+    This Endpoint retrieves the 9 latest detection images together with their confidences and detections metadata from MinIO,
     encodes the image in base64 and returns it with the metadata in JSON
     """
 
-     # List objects in the bucket
     objects = minio_client.list_objects(MINIO_BUCKET_NAME, recursive=True)
 
     # Sort objects by 'last_modified' attribute in descending order
@@ -49,14 +48,13 @@ def get_latest_detections():
     response_data = []
 
     for obj in latest_objects:
-        # Retrieve the object from MinIO
         response = minio_client.get_object(MINIO_BUCKET_NAME, obj.object_name)
 
         # Read the object data
         object_data = response.read()
 
         # Convert the object data to a base64 encoded string
-        encoded_data = base64.b64encode(object_data).decode('utf-8')
+        base64_encoded_data = base64.b64encode(object_data).decode('utf-8')
 
         # Retrieve metadata
         confidences = response.headers.get('x-amz-meta-confidences')
@@ -64,7 +62,7 @@ def get_latest_detections():
 
         # Create a dictionary for each object with the encoded data and metadata
         object_dict = {
-            'image_data': encoded_data,
+            'image_data': base64_encoded_data,
             'confidences': confidences,
             'detections': detections
         }
@@ -83,9 +81,11 @@ def upload_as_jpeg_file():
     jpeg with the detections and confidences as metadata to MinIO
     """
     
+    # Retrieve base64 encoded image data and decode it
     base64_encoded_image = request.json.get("image")
     decoded_image = base64.b64decode(base64_encoded_image)
     
+    # Retrieve image metadata
     image_metadata = {
         "detections" : request.json.get("detections"),
         "confidences" : request.json.get("confidences")
@@ -112,7 +112,7 @@ def upload_as_json_file():
     This Endpoint saves the base64 encoded image with the detections
     and confidences in a JSON file and uploads it to MinIO
     """
-    
+
     try:
         # Get the JSON object from the request
         json_object = request.get_json()
@@ -124,7 +124,7 @@ def upload_as_json_file():
         timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         file_name = f"{timestamp}.json"
 
-        # Write the JSON string to a file
+        # Write the JSON string to a JSON file
         with open(file_name, "w") as json_file:
             json_file.write(json_string)
 
@@ -136,4 +136,4 @@ def upload_as_json_file():
         return f"Error: {str(e)}"
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=5001)
