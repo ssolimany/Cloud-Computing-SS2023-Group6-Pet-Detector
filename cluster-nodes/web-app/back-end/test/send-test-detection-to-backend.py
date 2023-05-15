@@ -2,6 +2,7 @@ import requests
 import base64
 import random
 
+
 # Flask backend URL
 BACKEND_URL = 'http://192.168.178.20:5001'
 
