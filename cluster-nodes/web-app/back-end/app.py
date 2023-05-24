@@ -57,14 +57,18 @@ def get_latest_detections():
             base64_encoded_data = base64.b64encode(object_data).decode('utf-8')
 
             # Retrieve metadata
-            confidences = response.headers.get('x-amz-meta-confidences')
-            detections = response.headers.get('x-amz-meta-detections')
+            detection_amount = response.headers.get('x-amz-meta-detection-amount')
+            detection_classes = response.headers.get('x-amz-meta-detection-classes')
+            detection_confidences = response.headers.get('x-amz-meta-detection-confidence-values')
+            timestamp = response.headers.get('x-amz-meta-timestamp')
 
             # Create a dictionary for each object with the encoded data and metadata
             object_dict = {
-                'image_data': base64_encoded_data,
-                'confidences': confidences,
-                'detections': detections
+                "image_data": base64_encoded_data,
+                "detection_amount": detection_amount,
+                "detection_classes": detection_classes,
+                "detection_confidence_values": detection_confidences,
+                "timestamp": timestamp
             }
 
             response_data.append(object_dict)
@@ -86,18 +90,20 @@ def upload_detections():
     
     try:
         # Retrieve base64 encoded image data and decode it
-        base64_encoded_image = request.json.get("image")
+        base64_encoded_image = request.json.get("image_data")
         decoded_image = base64.b64decode(base64_encoded_image)
+
+        # Generate timestamp for the object name and metadata
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        object_name = f"{timestamp}.jpg"
     
         # Retrieve image metadata
         image_metadata = {
-            "detections" : request.json.get("detections"),
-            "confidences" : request.json.get("confidences")
+            "detection-amount": request.json.get("detection_amount"),
+            "detection-classes": request.json.get("detection_classes"),
+            "detection-confidence-values": request.json.get("detection_confidence_values"),
+            "timestamp": timestamp
         }
-
-        # Generate timestamp for the object name
-        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        object_name = f"{timestamp}.jpg"
 
         # Upload the image to MinIO
         minio_client.put_object(
