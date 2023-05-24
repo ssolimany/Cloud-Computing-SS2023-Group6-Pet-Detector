@@ -78,7 +78,7 @@ def get_latest_detections():
         return f"Error: {str(e)}"
 
 @app.route("/upload/jpeg", methods=["POST"])
-def upload_as_jpeg_file():
+def upload_detections():
     """
     This Endpoint decodes the base64 encoded image and uploads it as
     jpeg with the detections and confidences as metadata to MinIO
