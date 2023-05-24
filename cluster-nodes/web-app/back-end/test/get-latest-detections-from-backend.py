@@ -11,7 +11,7 @@ response = requests.get(url=f"{BACKEND_URL}/")
 # Check the response status
 if response.status_code == 200:
     print("Data successfully received.")
-    print(response.body)
+    print(response)
 else:
     print("Failed to receive data. Status code:", response.status_code)
 
