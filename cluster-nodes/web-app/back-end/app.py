@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from io import BytesIO
 from minio import Minio
-import json
 import datetime
 import base64
 
