@@ -114,35 +114,5 @@ def upload_as_jpeg_file():
     except Exception as e:
         return f"Error: {str(e)}"
 
-@app.route("/upload/json", methods=["POST"])
-def upload_as_json_file():
-    """
-    This Endpoint saves the base64 encoded image with the detections
-    and confidences in a JSON file and uploads it to MinIO
-    """
-
-    try:
-        # Get the JSON object from the request
-        json_object = request.get_json()
-
-        # Convert the JSON object to a string
-        json_string = json.dumps(json_object)
-
-        # Generate a unique filename using a timestamp
-        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        file_name = f"{timestamp}.json"
-
-        # Write the JSON string to a JSON file
-        with open(file_name, "w") as json_file:
-            json_file.write(json_string)
-
-        # Upload the JSON file to MinIO
-        minio_client.fput_object(MINIO_BUCKET_NAME, file_name, file_name)
-
-        return "JSON file uploaded successfully!"
-
-    except Exception as e:
-        return f"Error: {str(e)}"
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
