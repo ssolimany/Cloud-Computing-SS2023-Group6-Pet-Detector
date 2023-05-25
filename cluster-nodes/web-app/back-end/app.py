@@ -5,7 +5,7 @@ import datetime
 import base64
 
 # MinIO server configuration
-MINIO_ENDPOINT = "192.168.178.20:9000"
+MINIO_ENDPOINT = "192.168.178.25:9000"
 MINIO_ACCESS_KEY = "minioadmin"
 MINIO_SECRET_KEY = "minioadmin"
 MINIO_BUCKET_NAME = "detections"

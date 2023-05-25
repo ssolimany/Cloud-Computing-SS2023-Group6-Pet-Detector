@@ -1,0 +1,80 @@
+.card {
+    width: 250px;
+    height: 340px;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    position: relative;
+    background-color: rgb(234, 230, 230);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .card img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .card:hover img {
+    transform: scale(1.1);
+  }
+  
+  .card .pettype {
+    font-weight: 200;
+    padding: 10px;
+    padding-left: 5px;
+    top: 15px;
+    left: 15px;
+    text-align: center;
+  }
+  
+  .card .timeStamp,
+  .card .confidence,
+  .card .detection {
+    font-weight: 400;
+    font-size: 15px;
+    padding-left: 5px;
+    left: 15px;
+    top: 40px;
+  }
+  
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .card {
+      width: 90%;
+      height: 50%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .card img {
+      height: 80%;
+      width: 50%;
+      object-fit: cover;
+    }
+  
+    .card .pettype,
+    .card .timeStamp {
+      top: initial;
+      left: initial;
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card img {
+      width: 90%;
+      height: 50%;
+      object-fit: cover;
+    }
+  }
+  
