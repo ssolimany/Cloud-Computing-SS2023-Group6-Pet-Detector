@@ -6,7 +6,7 @@ import requests
 import base64
 
 # Flask backend URL
-BACKEND_URL = 'http://192.168.178.20:5001'
+BACKEND_URL = 'http://127.0.0.1:5001'
 
 def draw_boxes(img, detections, class_names):
     for det in detections:
