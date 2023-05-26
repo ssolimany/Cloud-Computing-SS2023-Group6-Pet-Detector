@@ -3,9 +3,18 @@ from io import BytesIO
 from minio import Minio
 import datetime
 import base64
+import requests
+import asyncio
+import telegram
+
+
+TELEGRAM_BOT_API_TOKEN = "5821367014:AAHbUmoY6uTIMB4VkwMIQ2oNSWU8MD1RFa0"
+TELEGRAM_CHAT_ID = "-1001858027212"
+TELEGRAM_BOT_API_URL = f'https://api.telegram.org/bot{TELEGRAM_BOT_API_TOKEN}/sendPhoto'
+TELEGRAM_BOT = telegram.Bot(TELEGRAM_BOT_API_TOKEN)
 
 # MinIO server configuration
-MINIO_ENDPOINT = "192.168.178.25:9000"
+MINIO_ENDPOINT = "127.0.0.1:9000"
 MINIO_ACCESS_KEY = "minioadmin"
 MINIO_SECRET_KEY = "minioadmin"
 MINIO_BUCKET_NAME = "detections"
@@ -113,8 +122,14 @@ def upload_detections():
             length=len(decoded_image),
             metadata=image_metadata
         )
+        
+        # Upload the image to Telegram using the bot's API URL
+        # async with TELEGRAM_BOT:
+        #    print(await TELEGRAM_BOT.get_me())
 
-        return "Image uploaded successfully!"
+        # response = requests.post(TELEGRAM_BOT_API_URL, json={'chat_id': TELEGRAM_CHAT_ID, 'photo': BytesIO(decoded_image)})
+
+        return "Image uploaded to MinIO and Telegram successfully!"
     
     except Exception as e:
         return f"Error: {str(e)}"
