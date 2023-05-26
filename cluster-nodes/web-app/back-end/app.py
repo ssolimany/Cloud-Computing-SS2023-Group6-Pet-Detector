@@ -4,14 +4,11 @@ from minio import Minio
 import datetime
 import base64
 import requests
-import asyncio
-import telegram
 
-
+# Telegram Bot API Token, URL and Chat ID
 TELEGRAM_BOT_API_TOKEN = "5821367014:AAHbUmoY6uTIMB4VkwMIQ2oNSWU8MD1RFa0"
-TELEGRAM_CHAT_ID = "-1001858027212"
 TELEGRAM_BOT_API_URL = f'https://api.telegram.org/bot{TELEGRAM_BOT_API_TOKEN}/sendPhoto'
-TELEGRAM_BOT = telegram.Bot(TELEGRAM_BOT_API_TOKEN)
+TELEGRAM_CHAT_ID = "-1001858027212"
 
 # MinIO server configuration
 MINIO_ENDPOINT = "127.0.0.1:9000"
@@ -69,7 +66,7 @@ def get_latest_detections():
             detection_amount = response.headers.get('x-amz-meta-detection-amount')
             detection_classes = response.headers.get('x-amz-meta-detection-classes')
             detection_confidences = response.headers.get('x-amz-meta-detection-confidence-values')
-            timestamp = response.headers.get('x-amz-meta-timestamp')
+            detection_timestamp = response.headers.get('x-amz-meta-detection-timestamp')
 
             # Create a dictionary for each object with the encoded data and metadata
             object_dict = {
@@ -77,7 +74,7 @@ def get_latest_detections():
                 "detection_amount": detection_amount,
                 "detection_classes": detection_classes,
                 "detection_confidence_values": detection_confidences,
-                "timestamp": timestamp
+                "detection_timestamp": detection_timestamp
             }
 
             response_data.append(object_dict)
@@ -102,16 +99,21 @@ def upload_detections():
         base64_encoded_image = request.json.get("image_data")
         decoded_image = base64.b64decode(base64_encoded_image)
 
-        # Generate timestamp for the object name and metadata
-        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        object_name = f"{timestamp}.jpg"
-    
         # Retrieve image metadata
+        detection_amount = request.json.get("detection_amount")
+        detection_classes = request.json.get("detection_classes")
+        detection_confidence_values = request.json.get("detection_confidence_values")
+
+        # Generate timestamp for the object name and metadata
+        detection_timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        object_name = f"{detection_timestamp}.jpg"
+    
+        # Save image metadata in a dictionary
         image_metadata = {
-            "detection-amount": request.json.get("detection_amount"),
-            "detection-classes": request.json.get("detection_classes"),
-            "detection-confidence-values": request.json.get("detection_confidence_values"),
-            "timestamp": timestamp
+            "detection-amount": detection_amount,
+            "detection-classes": detection_classes,
+            "detection-confidence-values": detection_confidence_values,
+            "detection-timestamp": detection_timestamp
         }
 
         # Upload the image to MinIO
@@ -124,10 +126,17 @@ def upload_detections():
         )
         
         # Upload the image to Telegram using the bot's API URL
-        # async with TELEGRAM_BOT:
-        #    print(await TELEGRAM_BOT.get_me())
+        data = {
+            "chat_id" : TELEGRAM_CHAT_ID,
+            "caption" : f"Detection amount: {detection_amount}\n" +
+                        f"Detection class(es): {detection_classes}\n" +
+                        f"Detection confidence value(s): {detection_confidence_values}\n" +
+                        f"Detection timestamp: {detection_timestamp}"
+        }
 
-        # response = requests.post(TELEGRAM_BOT_API_URL, json={'chat_id': TELEGRAM_CHAT_ID, 'photo': BytesIO(decoded_image)})
+        file = {"photo": decoded_image}
+
+        requests.post(TELEGRAM_BOT_API_URL, data=data, files=file)
 
         return "Image uploaded to MinIO and Telegram successfully!"
     
