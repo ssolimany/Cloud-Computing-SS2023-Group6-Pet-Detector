@@ -21,7 +21,7 @@ const Navbar = () => {
     <div className={active ? "navbar active" : "navbar"}>
         <div className="container">
             <div className="applogo">
-                <img src="./img/cat1.jpg" alt="AppLogo" />
+                <img src="./logo/pdlogo.png" alt="AppLogo" />
                 <span>Pet Detection</span>
             </div>
 

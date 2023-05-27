@@ -18,27 +18,22 @@
         width: 1400px;
         display: flex;
         justify-content: space-evenly;
-        padding: 20px 20px;
+        padding: 0px 0px;
         
         align-items: center;
         .applogo{
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
             display: flex;
             align-items: center;
+            padding: 5px;
             img{
-                width: 50px;
-                height: 50px;
-                border-radius: 5px;
+                height: 25px;
              }
              span{
-                font-size: 30px;
+                font-size: 20px;
                 padding-left: 10px;
              }
-        }
-
-        .apptitle{
-            
         }
 
         .frauaslogo{
@@ -50,7 +45,7 @@
 
         }
         .signin{
-            padding: 10px 20px;
+            padding: 5px 5px;
             border-radius: 5px;
             border: 1px solid white;
             cursor: pointer;

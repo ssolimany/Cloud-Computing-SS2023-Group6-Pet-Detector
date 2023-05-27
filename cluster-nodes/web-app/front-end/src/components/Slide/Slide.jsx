@@ -4,6 +4,10 @@ import Slider from 'infinite-react-carousel';
 import Card from '../card/Card';
 import { cards } from '../../data';
 
+
+
+
+const Slide = () => {
 const [data, setData] = useState(null);
 
 useEffect(() => {
@@ -12,25 +16,22 @@ useEffect(() => {
 
 const fetchData = async () => {
   try {
-    const response = await fetch('http://192.168.178.40:5001/');
+    const response = await fetch('http://127.0.0.1:5001/');
     const jsonData = await response.json();
     setData(jsonData);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching DATA:', error);
   }
 };
+  console.log("hiiiiiiiiiiii")
+  console.log(data)
 
-
-const Slide = () => {
-    console.log(cards)
-
-
-
+  const items =  data ?? cards
   return (
     <div className='slide'>
         <div className="container">
         <Slider arrowsScroll={2} slidesPerRow={1} slidesToShow={3} >
-            {cards.map(card=>(
+            {items.map(card=>(
                 <Card item={card} key={card.id}/>
             ))}
         </Slider>
