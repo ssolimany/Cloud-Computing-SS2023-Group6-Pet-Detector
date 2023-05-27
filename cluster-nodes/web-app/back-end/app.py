@@ -4,6 +4,8 @@ from minio import Minio
 import datetime
 import base64
 import requests
+from flask_cors import CORS
+
 
 # Telegram Bot API Token, URL and Chat ID
 TELEGRAM_BOT_API_TOKEN = "5821367014:AAHbUmoY6uTIMB4VkwMIQ2oNSWU8MD1RFa0"
@@ -34,6 +36,8 @@ else:
     print(f"Bucket '{MINIO_BUCKET_NAME}' already exists")
 
 app = Flask(__name__)
+#Enable remote callss
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def get_latest_detections():
