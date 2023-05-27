@@ -59,9 +59,9 @@ try:
             base64_encoded_image = base64.b64encode(image_data).decode('utf-8')
 
             data = {
-                'image': base64_encoded_image,
-                'detections': detections,
-                'confidences': confidences
+                'image_data': base64_encoded_image,
+                'detection_amount': detections,
+                'detection_confidence_values': confidences
             }
 
             response = requests.post(url=f"{BACKEND_URL}/upload/jpeg", json=data)
