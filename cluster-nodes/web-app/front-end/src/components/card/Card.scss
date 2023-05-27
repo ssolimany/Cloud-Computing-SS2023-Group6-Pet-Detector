@@ -9,6 +9,7 @@
     flex-direction: column;
     border: 1px solid white;
     transition: box-shadow 0.3s ease-in-out;
+    text-align: center;
   }
   
   .card img {
@@ -32,7 +33,6 @@
     padding-left: 5px;
     top: 15px;
     left: 15px;
-    text-align: center;
   }
   
   .card .timeStamp,

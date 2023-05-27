@@ -13,6 +13,7 @@ const Card = ({item}) => {
     </div>
   )
 }
+
 function formatTimestamp(timestamp) {
   const year = timestamp.slice(0, 4);
   const month = timestamp.slice(4, 6);
@@ -21,7 +22,17 @@ function formatTimestamp(timestamp) {
   const minute = timestamp.slice(10, 12);
   const second = timestamp.slice(12, 14);
 
-  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}Z`);
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  };
+
+  return date.toLocaleString('en-US', options);
 }
 
 export default Card
