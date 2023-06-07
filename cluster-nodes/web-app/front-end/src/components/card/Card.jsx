@@ -2,15 +2,37 @@ import React from 'react'
 import "./Card.scss"
 
 const Card = ({item}) => {
+  const formattedTimestamp = item.timestamp ? formatTimestamp(item.timestamp) : "";
   return (
     <div className='card'>
-       <img src={`./img/${item.imagePath}`} alt="imagePath"/>
-       <span className="pettype">{item.petType}</span>
-       <span className="timeStamp">{new Date(item.timeStamp).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })}</span>
-       <span className='confidence'>Confidence: {item.confidence}</span>
-       <span className='detection'>Setection: {item.detection}</span>
+       <img src={`data:image/jpeg;base64, ${item.image_data}`} alt="imagePath"/>
+       <span className="pettype">{item.detection_classes}</span>
+       <span className="timeStamp">{formattedTimestamp}</span>
+       <span className='confidence'>Confidence: {item.detection_confidence_values}</span>
+       <span className='detection'>Detection: {item.detection_amount}</span>
     </div>
   )
+}
+
+function formatTimestamp(timestamp) {
+  const year = timestamp.slice(0, 4);
+  const month = timestamp.slice(4, 6);
+  const day = timestamp.slice(6, 8);
+  const hour = timestamp.slice(8, 10);
+  const minute = timestamp.slice(10, 12);
+  const second = timestamp.slice(12, 14);
+
+  const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}Z`);
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  };
+
+  return date.toLocaleString('en-US', options);
 }
 
 export default Card
