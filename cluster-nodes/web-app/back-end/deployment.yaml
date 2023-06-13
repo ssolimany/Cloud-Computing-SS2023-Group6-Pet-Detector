@@ -1,4 +1,4 @@
-# deployment.yaml
+# Deploys the backend
 
 apiVersion: apps/v1
 kind: Deployment
@@ -20,3 +20,20 @@ spec:
           ports:
             - containerPort: 5001
           # Add any necessary volume mounts or other container configuration
+---
+
+# Backend Service definition
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: cc-ss23-group5-pet-detector-backend
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+      name: backend
+  type: LoadBalancer
