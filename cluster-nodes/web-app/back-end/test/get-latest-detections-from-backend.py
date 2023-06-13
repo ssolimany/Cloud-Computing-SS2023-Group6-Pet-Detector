@@ -4,7 +4,7 @@ import json
 
 
 # Flask backend URL
-BACKEND_URL = 'http://127.0.0.1:5001'
+BACKEND_URL = 'http://192.168.178.66:5001'
 
 response = requests.get(url=f"{BACKEND_URL}/")
 
