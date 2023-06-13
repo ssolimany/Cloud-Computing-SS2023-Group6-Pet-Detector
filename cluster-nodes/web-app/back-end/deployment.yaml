@@ -1,0 +1,40 @@
+# deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cc-ss23-group5-pet-detector-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cc-ss23-group5-pet-detector-backend
+  template:
+    metadata:
+      labels:
+        app: cc-ss23-group5-pet-detector-backend
+    spec:
+      containers:
+        - name: cc-ss23-group5-pet-detector-backend-container
+          image: cc-ss23-group5-pet-detector-backend:latest
+          ports:
+            - containerPort: 5001
+          # Add any necessary volume mounts or other container configuration
+
+---
+
+# service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cc-ss23-group5-pet-detector-backend-service
+spec:
+  selector:
+    app: cc-ss23-group5-pet-detector-backend
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  # Specify the type of service (ClusterIP, NodePort, LoadBalancer) based on your needs
+  type: ClusterIP
