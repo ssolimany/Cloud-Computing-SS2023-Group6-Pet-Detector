@@ -13,7 +13,7 @@ TELEGRAM_BOT_API_URL = f'https://api.telegram.org/bot{TELEGRAM_BOT_API_TOKEN}/se
 TELEGRAM_CHAT_ID = "-1001858027212"
 
 # MinIO server configuration
-MINIO_ENDPOINT = "127.0.0.1:9000"
+MINIO_ENDPOINT = "192.168.178.66:9000"
 MINIO_ACCESS_KEY = "minioadmin"
 MINIO_SECRET_KEY = "minioadmin"
 MINIO_BUCKET_NAME = "detections"
