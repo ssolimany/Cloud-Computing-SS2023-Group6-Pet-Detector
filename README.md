@@ -5,6 +5,11 @@ An edge computing solution for the automatic detection of pets (cats, dogs, gold
 ## Frontend
 
 
+### Requirements
+
+- [Node.js](https://nodejs.org/en) >= 18.17.0
+
+
 ### Installation
 
 npm install --global yarn
@@ -15,10 +20,7 @@ npm install --save-dev sass
 npm i -D react-router-dom 
 yarn add infinite-react-carousel
 
-
-### Start the frontend with following command
-
-npm run dev
+npm run dev // Start the frontend with following command
 
 
 ## Backend
