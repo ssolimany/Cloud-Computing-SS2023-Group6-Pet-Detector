@@ -1,10 +1,24 @@
-# cc-ss23-group5-pet-detector
+# cc-ss23-group6-pet-detector
 An edge computing solution for the automatic detection of pets (cats, dogs, golden hamsters) for the cloud computing module in SS2023.
 
 
 ## Frontend
 
-TODO
+
+### Installation
+
+npm install --global yarn
+yarn
+yarn add eslint --dev
+npx eslint --init
+npm install --save-dev sass
+npm i -D react-router-dom 
+yarn add infinite-react-carousel
+
+
+### Start the frontend with following command
+
+npm run dev
 
 
 ## Backend
