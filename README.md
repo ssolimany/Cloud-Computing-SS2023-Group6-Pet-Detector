@@ -1,5 +1,6 @@
-# cc-ss23-group6-pet-detector
-An edge computing solution for the automatic detection of pets (cats, dogs, golden hamsters) for the cloud computing module in SS2023.
+# Cloud Computing SS23 - Group6 - Pet detector
+
+An edge computing solution for the automatic detection of pets (cats, dogs, golden hamsters) for the [cloud computing module in SS2023](https://www.christianbaun.de/CGC23/index.html).
 
 The project involves several key steps:
 
