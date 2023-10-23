@@ -1,6 +1,18 @@
 # cc-ss23-group6-pet-detector
 An edge computing solution for the automatic detection of pets (cats, dogs, golden hamsters) for the cloud computing module in SS2023.
 
+The project involves several key steps:
+
+1. Setting up sensor nodes using Raspberry Pi 4 and camera modules.
+1. Deploying an operating system and object detection software, such as Raspberry Pi OS, Ubuntu, YOLO, or TensorFlow.
+1. Collecting a sufficient number of images for training and testing the object detection model, using either personal hardware with GPUs or a cloud service like Roboflow or V7.
+1. Creating a backend system to manage sensor nodes and collected data, deployed as Docker containers on a Raspberry Pi Kubernetes Cluster with k3s. The backend infrastructure is designed to be robust and scalable, featuring a distributed file system like Ceph or a storage service like MinIO.
+1. Developing a frontend to display log information, event messages, and a map of events with accompanying images and timestamps. The frontend is deployed as a Docker container on the same Raspberry Pi Kubernetes Cluster and is built using a modern framework like Vue.js or React.
+1. Utilizing protocols like REST or MQTT for communication between various components, including the frontend, backend, and services.
+1. Implementing a Telegram notification feature using a Telegram Bot.
+
+Overall, the project aims to create a comprehensive system for sensor-based object detection and data management, with a strong focus on scalability and modern software development practices.
+
 
 ## Frontend
 
